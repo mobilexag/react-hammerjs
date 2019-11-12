@@ -110,7 +110,10 @@ export default class HammerComponent extends React.Component {
 
 	componentDidMount() {
 		// iOS 13 officially supports PointerEvents but in a buggy way. Hence, use traditional touch events!
-		this.hammer = new Hammer(this.domElement, { inputClass: Hammer.TouchMouseInput });
+		const options = window.device && window.device.platform && window.device.platform.toLocaleLowerCase() === 'ios'
+			? { inputClass: Hammer.TouchMouseInput }
+			: undefined;
+		this.hammer = new Hammer(this.domElement, options);
 		updateHammer(this.hammer, this.props);
 	}
 
